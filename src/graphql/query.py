@@ -10,3 +10,4 @@ class Query:
 
 
 #doing this for straks
+# also for streaks
