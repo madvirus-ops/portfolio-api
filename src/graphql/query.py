@@ -15,3 +15,5 @@ class Query:
 # also streaks
 
 # fixing my streaks
+
+# 22 july streaks
