@@ -9,6 +9,3 @@ class Query:
     certificate:strawberry.field(resolver=certificates_resolver)
 
 
-#doing this for straks
-
-
