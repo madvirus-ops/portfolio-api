@@ -2,33 +2,36 @@
 <p> Built to support graphql and rest-api</p>
 
 
-<p> Project Tree
+<p> Project Tree </p>
+
 ```
-├── migrations
-│   ├── env.py
-│   ├── README
-│   ├── script.py.mako
-│   └── versions
-├── README.md
-├── requirements.txt
-└── src
-    ├── connections
-    │   ├── database.py
-    │   ├── __init__.py
-    │   └── models.py
-    ├── graphql
-    │   ├── graph_schema.py
-    │   └── __init__.py
-    ├── helpers
-    │   ├── exceptions.py
-    │   ├── __init__.py
-    │   └── profile.py
-    ├── __init__.py
+
+
+    ├── migrations
+    │   ├── env.py
+    │   ├── README
+    │   ├── script.py.mako
+    │   └── versions
     ├── README.md
-    ├── rest-api
-    │   ├── __init__.py
-    │   ├── profile.py
-    │   └── rest_schema.py
-    └── settings.py
+    ├── requirements.txt
+    └── src
+        ├── connections
+        │   ├── database.py
+        │   ├── __init__.py
+        │   └── models.py
+        ├── graphql
+        │   ├── graph_schema.py
+        │   └── __init__.py
+        ├── helpers
+        │   ├── exceptions.py
+        │   ├── __init__.py
+        │   └── profile.py
+        ├── __init__.py
+        ├── README.md
+        ├── rest-api
+        │   ├── __init__.py
+        │   ├── profile.py
+        │   └── rest_schema.py
+        └── settings.py
 
 ```
