@@ -19,23 +19,17 @@ def function_name():
 
 def create_education(details: EducationIn, db: Session):
     try:
-        new = db.query(Education).filter(Education.email == details.email).first()
-        if new is None:
-            create = Education(**details.model_dump())
-            db.add(create)
-            db.commit()
-            db.refresh(create)
-            return {
+        create = Education(**details.model_dump())
+        db.add(create)
+        db.commit()
+        db.refresh(create)
+        return {
                 "code": 201,
                 "status": "success",
                 "message": "Education created successfully",
                 "id": create.id,
             }
-        return {
-            "code": 400,
-            "status": "error",
-            "message": f"Education with details already exist, update with id `{new.id}`",
-        }
+
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}

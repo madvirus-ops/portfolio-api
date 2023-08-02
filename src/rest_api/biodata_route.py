@@ -14,7 +14,7 @@ from connections.database import get_db
 from rest_api.rest_schema import BioDataIn, BioDataOut, AllBioData, BioDataUpdate
 
 
-router = APIRouter(prefix="/api/v1/biodata", tags=["Bio Data Router"])
+router = APIRouter(prefix="/api/v1/biodata", tags=["Bio Data Routes"])
 
 
 @router.post("/")

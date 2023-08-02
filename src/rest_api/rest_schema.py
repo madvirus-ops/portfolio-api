@@ -58,9 +58,29 @@ class EducationIn(BaseModel):
     school_name  :str
     course :str
     degree_type  :str
-    year_entered  :str
-    year_finished:str
+    year_entered  :date
+    year_finished:date
 
 class EducationOut(EducationIn):
     id:str
     created_at:datetime
+
+    class Meta:
+        orm_mode = True
+
+
+class AllEducation(BaseModel):
+    id:str
+    biodata_id:str
+    school_name:str
+    created_at:datetime
+
+
+class EducationUpdate(BaseModel):
+    biodata_id :Optional[str] = None 
+    school_name  :Optional[str] = None 
+    course :Optional[str] = None 
+    degree_type  :Optional[str] = None 
+    year_entered  :Optional[date] = None 
+    year_finished:Optional[date] = None 
+
