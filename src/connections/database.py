@@ -2,7 +2,7 @@ import sys
 sys.path.append("./")
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker,declarative_base
+from sqlalchemy.orm import sessionmaker,declarative_base,Session
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -24,7 +24,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 
-def get_db():
+def get_db() -> Session:
     """ ensures the database connection is always closed 
         to use this we have to use fastapi.Depends() as an argument in the routes
     """
