@@ -28,7 +28,7 @@ def create_biodata(details: BioData, db: Session):
                 "code": 201,
                 "status": "success",
                 "message": "Biodata created successfully",
-                "data": create,
+                "id": create.id,
             }
         return {
             "code": 400,
@@ -40,7 +40,7 @@ def create_biodata(details: BioData, db: Session):
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def get_biodata(biodata_id:str,db:Session):
+def get_biodata(biodata_id: str, db: Session):
     try:
         fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
         if fetch is None:
@@ -49,7 +49,21 @@ def get_biodata(biodata_id:str,db:Session):
                 "status": "error",
                 "message": "Biodata Not Found",
             }
-        return {"code":200,"data":fetch}
+        return {"code": 200, "data": fetch}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}
+
+def get_all_biodatas(db:Session):
+    try:
+        fetch = db.query(BioData).all()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Biodata Not Found",
+            }
+        return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}

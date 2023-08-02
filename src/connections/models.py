@@ -74,6 +74,13 @@ class BioData(AbstractModel):
         primaryjoin="BioData.id==PersonalProjects.biodata_id",
         foreign_keys="[PersonalProjects.biodata_id]",
     )
+    socials  = relationship(
+        "Socials",
+        back_populates="biodata",
+        cascade="all, delete-orphan",
+        primaryjoin="BioData.id==Socials.biodata_id",
+        foreign_keys="[Socials.biodata_id]",
+    )
     contact  = relationship(
         "Contact",
         back_populates="biodata",
@@ -122,6 +129,14 @@ class PersonalProjects(AbstractModel):
     project_url = Column(String(255), default="")
     image_url = Column(String(255), default="")
     biodata = relationship("BioData", back_populates="personal_projects")
+
+class Socials(AbstractModel):
+    __tablename__ = "socials"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
+    name = Column(String(255), default="")
+    url = Column(String(255), default="")
+    biodata = relationship("BioData", back_populates="socials")
+
 
 
 class Contact(AbstractModel):
