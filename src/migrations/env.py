@@ -3,8 +3,8 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 import os
-from src.connections.models import *
-from src.connections.database import Base
+from connections.models import *
+from connections.database import Base
 from dotenv import load_dotenv
 load_dotenv()
 
