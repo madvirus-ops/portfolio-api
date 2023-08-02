@@ -1,7 +1,8 @@
 import sys
 sys.path.append("./")
 
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
+from typing import Optional,Union
 from datetime import date
 
 
@@ -30,3 +31,18 @@ class AllBioData(BaseModel):
     gender :str
     email:str
     nationality :str
+
+
+
+class BioDataUpdate(BaseModel):
+    first_name :Optional[str] = None 
+    middle_name :Optional[str] = None 
+    last_name :Optional[str] = None 
+    email :Optional[EmailStr] = None 
+    location :Optional[str] = None 
+    date_of_birth:Optional[date] = None
+    gender :Optional[str] = None 
+    nationality :Optional[str] = None 
+    languages :Optional[str] = None 
+    interests :Optional[str] = None 
+    headline :Optional[str] = None 

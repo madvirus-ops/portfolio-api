@@ -3,9 +3,9 @@ import sys
 sys.path.append("./")
 from fastapi import APIRouter, Depends, Response, status, HTTPException
 from sqlalchemy.orm import Session
-from helpers.biodata_help import create_biodata, get_biodata,get_all_biodatas
+from helpers.biodata_help import create_biodata, get_biodata,get_all_biodatas,update_biodata
 from connections.database import get_db
-from rest_api.rest_schema import BioDataIn, BioDataOut,AllBioData
+from rest_api.rest_schema import BioDataIn, BioDataOut,AllBioData,BioDataUpdate
 
 
 router = APIRouter(prefix="/api/v1/biodata", tags=["Bio Data Router"])
@@ -45,4 +45,10 @@ async def get_biodata_route(
             404, {"code": 404, "status": "error", "message": "biodata does not exist"}
         )
     
+@router.patch("/{biodata_id}")
+async def update_biodata_route(biodata_id: str, body: BioDataUpdate,response: Response, db: Session = Depends(get_db)):
+    result = update_biodata(biodata_id,body,db)
+    response.status_code = result["code"]
+    return result
+
 

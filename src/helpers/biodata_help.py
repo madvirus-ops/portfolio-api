@@ -4,7 +4,7 @@ sys.path.append("./")
 from connections.models import BioData
 from sqlalchemy.orm import Session
 from connections.database import get_db
-from rest_api.rest_schema import BioDataIn
+from rest_api.rest_schema import BioDataIn,BioDataUpdate
 
 
 # helper
@@ -16,11 +16,11 @@ def function_name():
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def create_biodata(details: BioData, db: Session):
+def create_biodata(details: BioDataIn, db: Session):
     try:
         new = db.query(BioData).filter(BioData.email == details.email).first()
         if new is None:
-            create = BioData(**details.dict())
+            create = BioData(**details.model_dump())
             db.add(create)
             db.commit()
             db.refresh(create)
@@ -64,6 +64,26 @@ def get_all_biodatas(db:Session):
                 "message": "Biodata Not Found",
             }
         return {"code": 200, "data": fetch}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}
+    
+
+def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
+    try:
+        fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Biodata Not Found",
+            }
+        hero_data = details.model_dump(exclude_unset=True)
+        for key, value in hero_data.items():
+            setattr(fetch, key, value)
+        db.add(fetch)
+        db.commit()
+        return {"code":200,"status":"success","message":f"{biodata_id} updated"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
