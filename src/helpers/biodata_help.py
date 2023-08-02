@@ -87,3 +87,20 @@ def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
+    
+
+def delete_biodata(biodata_id: str, db: Session):
+    try:
+        fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Biodata Not Found",
+            }
+        db.delete(fetch)
+        db.commit()
+        return {"code": 200, "data": fetch,"message":f"{biodata_id} deleted"}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}

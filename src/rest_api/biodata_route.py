@@ -3,7 +3,7 @@ import sys
 sys.path.append("./")
 from fastapi import APIRouter, Depends, Response, status, HTTPException
 from sqlalchemy.orm import Session
-from helpers.biodata_help import create_biodata, get_biodata,get_all_biodatas,update_biodata
+from helpers.biodata_help import create_biodata, get_biodata,get_all_biodatas,update_biodata,delete_biodata
 from connections.database import get_db
 from rest_api.rest_schema import BioDataIn, BioDataOut,AllBioData,BioDataUpdate
 
@@ -51,4 +51,7 @@ async def update_biodata_route(biodata_id: str, body: BioDataUpdate,response: Re
     response.status_code = result["code"]
     return result
 
-
+@router.delete("/{biodata_id}",response_description="deleted successfuly")
+async def delete_biodata_route(biodata_id: str,response: Response, db: Session = Depends(get_db)):
+    result = delete_biodata(biodata_id,db)
+    response.status_code = result["code"]
