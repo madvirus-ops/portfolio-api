@@ -1,10 +1,10 @@
 import sys
 
 sys.path.append("./")
-from connections.models import BioData,tz
+from connections.models import Education,tz
 from sqlalchemy.orm import Session
 from connections.database import get_db
-from rest_api.rest_schema import BioDataIn,BioDataUpdate
+from rest_api.rest_schema import EducationIn,EducationUpdate
 from datetime import datetime
 
 
@@ -17,52 +17,52 @@ def function_name():
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def create_biodata(details: BioDataIn, db: Session):
+def create_education(details: EducationIn, db: Session):
     try:
-        new = db.query(BioData).filter(BioData.email == details.email).first()
+        new = db.query(Education).filter(Education.email == details.email).first()
         if new is None:
-            create = BioData(**details.model_dump())
+            create = Education(**details.model_dump())
             db.add(create)
             db.commit()
             db.refresh(create)
             return {
                 "code": 201,
                 "status": "success",
-                "message": "Biodata created successfully",
+                "message": "Education created successfully",
                 "id": create.id,
             }
         return {
             "code": 400,
             "status": "error",
-            "message": f"biodata with details already exist, update with id `{new.id}`",
+            "message": f"Education with details already exist, update with id `{new.id}`",
         }
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def get_biodata(biodata_id: str, db: Session):
+def get_education(education_id: str, db: Session):
     try:
-        fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
+        fetch = db.query(Education).filter(Education.id == education_id).first()
         if fetch is None:
             return {
                 "code": 404,
                 "status": "error",
-                "message": "Biodata Not Found",
+                "message": "Education Not Found",
             }
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
-def get_all_biodatas(db:Session):
+def get_all_educations(db:Session):
     try:
-        fetch = db.query(BioData).all()
+        fetch = db.query(Education).all()
         if fetch is None:
             return {
                 "code": 404,
                 "status": "error",
-                "message": "Biodata Not Found",
+                "message": "Education Not Found",
             }
         return {"code": 200, "data": fetch}
     except Exception as e:
@@ -70,14 +70,14 @@ def get_all_biodatas(db:Session):
         return {"code": 400, "status": "error", "message": e.args}
     
 
-def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
+def update_education(education_id: str,details: EducationUpdate, db: Session):
     try:
-        fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
+        fetch = db.query(Education).filter(Education.id == education_id).first()
         if fetch is None:
             return {
                 "code": 404,
                 "status": "error",
-                "message": "Biodata Not Found",
+                "message": "Education Not Found",
             }
         fetch.updated_at = datetime.now(tz)
         db.commit()
@@ -86,24 +86,24 @@ def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
             setattr(fetch, key, value)
         db.add(fetch)
         db.commit()
-        return {"code":200,"status":"success","message":f"{biodata_id} updated"}
+        return {"code":200,"status":"success","message":f"{education_id} updated"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
     
 
-def delete_biodata(biodata_id: str, db: Session):
+def delete_education(education_id: str, db: Session):
     try:
-        fetch = db.query(BioData).filter(BioData.id == biodata_id).first()
+        fetch = db.query(Education).filter(Education.id == education_id).first()
         if fetch is None:
             return {
                 "code": 404,
                 "status": "error",
-                "message": "Biodata Not Found",
+                "message": "Education Not Found",
             }
         db.delete(fetch)
         db.commit()
-        return {"code": 200, "data": fetch,"message":f"{biodata_id} deleted"}
+        return {"code": 200, "data": fetch,"message":f"{education_id} deleted"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}

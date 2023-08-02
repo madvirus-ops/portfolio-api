@@ -3,7 +3,7 @@ sys.path.append("./")
 
 from pydantic import BaseModel,EmailStr
 from typing import Optional,Union
-from datetime import date
+from datetime import date,datetime
 
 
 class BioDataIn(BaseModel):
@@ -21,6 +21,7 @@ class BioDataIn(BaseModel):
 
 class BioDataOut(BioDataIn):
     id:str
+    created_at:datetime
 
     class Meta:
         orm_mode = True
@@ -31,6 +32,7 @@ class AllBioData(BaseModel):
     gender :str
     email:str
     nationality :str
+    created_at:datetime
 
 
 
@@ -46,3 +48,19 @@ class BioDataUpdate(BaseModel):
     languages :Optional[str] = None 
     interests :Optional[str] = None 
     headline :Optional[str] = None 
+
+
+
+# BioDataIn, BioDataOut, AllBioData, BioDataUpdate
+
+class EducationIn(BaseModel):
+    biodata_id :str
+    school_name  :str
+    course :str
+    degree_type  :str
+    year_entered  :str
+    year_finished:str
+
+class EducationOut(EducationIn):
+    id:str
+    created_at:datetime

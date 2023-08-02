@@ -88,6 +88,38 @@ class BioData(AbstractModel):
         primaryjoin="BioData.id==Contact.biodata_id",
         foreign_keys="[Contact.biodata_id]",
     )
+    education  = relationship(
+        "Education",
+        back_populates="biodata",
+        cascade="all, delete-orphan",
+        primaryjoin="BioData.id==Education.biodata_id",
+        foreign_keys="[Education.biodata_id]",
+    )
+    certificates  = relationship(
+        "ProfessionCertificate",
+        back_populates="biodata",
+        cascade="all, delete-orphan",
+        primaryjoin="BioData.id==ProfessionCertificate.biodata_id",
+        foreign_keys="[ProfessionCertificate.biodata_id]",
+    )
+
+class Education(AbstractModel):
+    __tablename__ = "education"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
+    school_name = Column(String(255), default="")
+    course = Column(String(255), default="")
+    degree_type = Column(String(255), default="")
+    year_entered = Column(Date, default=datetime.date)
+    year_finished=Column(Date, default=datetime.date)
+    biodata = relationship("BioData", back_populates="education")
+
+class ProfessionCertificate(AbstractModel):
+    __tablename__ = "certificates"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
+    issuer = Column(String(255), default="")
+    certificate_type = Column(String(255), default="")
+    year_issued = Column(Date, default=datetime.date)
+    biodata = relationship("BioData", back_populates="certificates")
 
 
 class SkillSets(AbstractModel):
