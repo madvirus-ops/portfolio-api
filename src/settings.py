@@ -12,6 +12,7 @@ from passlib.context import CryptContext
 
 class Settings:
     APP_TITLE = "Edwin Ayabie - Portfolio"
+    APP_DESCRIPTION="My portfolio with rest_api and graphql"
     ALLOWED_HOST = os.getenv("ALLOWED_HOST").split(",")
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = bool(os.getenv("DEBUG"))

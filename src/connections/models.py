@@ -50,41 +50,42 @@ class BioData(AbstractModel):
         "SkillSets",
         back_populates="biodata",
         cascade="all, delete-orphan",
-        primaryjoin="BioData.id==SkillSets.id",
-        foreign_keys="[SkillSets.id]",
+        primaryjoin="BioData.id==SkillSets.biodata_id",
+        foreign_keys="[SkillSets.biodata_id]",
     )
     soft_skills = relationship(
         "SoftSkills",
         back_populates="biodata",
         cascade="all, delete-orphan",
-        primaryjoin="BioData.id==SoftSkills.id",
-        foreign_keys="[SoftSkills.id]",
+        primaryjoin="BioData.id==SoftSkills.biodata_id",
+        foreign_keys="[SoftSkills.biodata_id]",
     )
     work_experience = relationship(
         "WorkExperience",
         back_populates="biodata",
         cascade="all, delete-orphan",
-        primaryjoin="BioData.id==WorkExperience.id",
-        foreign_keys="[WorkExperience.id]",
+        primaryjoin="BioData.id==WorkExperience.biodata_id",
+        foreign_keys="[WorkExperience.biodata_id]",
     )
     personal_projects = relationship(
         "PersonalProjects",
         back_populates="biodata",
         cascade="all, delete-orphan",
-        primaryjoin="BioData.id==PersonalProjects.id",
-        foreign_keys="[PersonalProjects.id]",
+        primaryjoin="BioData.id==PersonalProjects.biodata_id",
+        foreign_keys="[PersonalProjects.biodata_id]",
     )
     contact  = relationship(
         "Contact",
         back_populates="biodata",
         cascade="all, delete-orphan",
-        primaryjoin="BioData.id==Contact.id",
-        foreign_keys="[Contact.id]",
+        primaryjoin="BioData.id==Contact.biodata_id",
+        foreign_keys="[Contact.biodata_id]",
     )
 
 
 class SkillSets(AbstractModel):
     __tablename__ = "skill_sets"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
     skill_name = Column(String(255), default="")
     skill_level = Column(Integer, default=100)
     efficiency = Column(Integer, default=100)
@@ -94,6 +95,7 @@ class SkillSets(AbstractModel):
 
 class SoftSkills(AbstractModel):
     __tablename__ = "soft_skills"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
     skill_name = Column(String(255), default="")
     skill_description = Column(Text, default="")
     skill_level = Column(Integer, default=100)
@@ -102,6 +104,7 @@ class SoftSkills(AbstractModel):
     
 class WorkExperience(AbstractModel):
     __tablename__ = "work_experience"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
     start_date = Column(Date, default=datetime.date)
     end_date = Column(Date, default=datetime.date)
     company_name  = Column(String(255), default="")
@@ -113,6 +116,7 @@ class WorkExperience(AbstractModel):
 
 class PersonalProjects(AbstractModel):
     __tablename__ = "personal_projects"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
     project_name = Column(String(255), default="")
     project_description = Column(Text,default="")
     project_url = Column(String(255), default="")
@@ -122,7 +126,9 @@ class PersonalProjects(AbstractModel):
 
 class Contact(AbstractModel):
     __tablename__ = "contact"
+    biodata_id = Column(String(255), ForeignKey("bio_data.id"), nullable=False)
     name = Column(String(255), default="")
     subject = Column(String(255), default="")
     email = Column(String(255), default="")
     message = Column(Text,default="")
+    biodata = relationship("BioData", back_populates="contact")
