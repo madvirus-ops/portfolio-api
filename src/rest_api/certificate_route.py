@@ -19,7 +19,7 @@ from rest_api.rest_schema import (
 )
 
 
-router = APIRouter(prefix="/api/v1/certificate", tags=[" certificate Routes"])
+router = APIRouter(prefix="/api/v1/certificate", tags=["Certificates Routes"])
 
 
 @router.post("/")

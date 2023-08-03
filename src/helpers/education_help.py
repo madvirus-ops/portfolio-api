@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from connections.database import get_db
 from rest_api.rest_schema import EducationIn, EducationUpdate
 from datetime import datetime
+from settings import settings
 
 
 # helper
@@ -32,6 +33,7 @@ def create_education(details: EducationIn, db: Session):
 
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -47,6 +49,7 @@ def get_education(education_id: str, db: Session):
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -62,6 +65,7 @@ def get_all_educations(db: Session):
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -84,6 +88,7 @@ def update_education(education_id: str, details: EducationUpdate, db: Session):
         return {"code": 200, "status": "success", "message": f"{education_id} updated"}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -101,4 +106,5 @@ def delete_education(education_id: str, db: Session):
         return {"code": 200, "data": fetch, "message": f"{education_id} deleted"}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}

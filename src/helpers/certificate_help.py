@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from connections.database import get_db
 from rest_api.rest_schema import CertificateIn, CertificateUpdate
 from datetime import datetime
-
+from settings import settings
 
 # helper
 def function_name():
@@ -32,6 +32,7 @@ def create_certificate(details: CertificateIn, db: Session):
 
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -47,6 +48,7 @@ def get_certificate(certificate_id: str, db: Session):
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -62,6 +64,7 @@ def get_all_certificates(db: Session):
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -88,6 +91,7 @@ def update_certificate(certificate_id: str, details: CertificateUpdate, db: Sess
         }
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -105,4 +109,5 @@ def delete_certificate(certificate_id: str, db: Session):
         return {"code": 200, "data": fetch, "message": f"{certificate_id} deleted"}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}

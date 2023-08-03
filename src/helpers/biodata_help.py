@@ -6,6 +6,9 @@ from sqlalchemy.orm import Session
 from connections.database import get_db
 from rest_api.rest_schema import BioDataIn,BioDataUpdate
 from datetime import datetime
+from settings import settings
+
+
 
 
 # helper
@@ -38,6 +41,7 @@ def create_biodata(details: BioDataIn, db: Session):
         }
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 
@@ -53,6 +57,7 @@ def get_biodata(biodata_id: str, db: Session):
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
 def get_all_biodatas(db:Session):
@@ -64,9 +69,11 @@ def get_all_biodatas(db:Session):
                 "status": "error",
                 "message": "Biodata Not Found",
             }
+        
         return {"code": 200, "data": fetch}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
     
 
@@ -86,9 +93,11 @@ def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
             setattr(fetch, key, value)
         db.add(fetch)
         db.commit()
+        settings.LOGGER.error(f"{biodata_id} updated")
         return {"code":200,"status":"success","message":f"{biodata_id} updated"}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
     
 
@@ -103,7 +112,9 @@ def delete_biodata(biodata_id: str, db: Session):
             }
         db.delete(fetch)
         db.commit()
+        settings.LOGGER.info(f"{biodata_id} deleted")
         return {"code": 200, "data": fetch,"message":f"{biodata_id} deleted"}
     except Exception as e:
         print(e.args)
+        settings.LOGGER.error(e.args)
         return {"code": 400, "status": "error", "message": e.args}
