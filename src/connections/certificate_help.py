@@ -35,3 +35,17 @@ def create_Certificate(details: CertificateIn, db: Session):
         return {"code": 400, "status": "error", "message": e.args}
 
 
+def get_Certificate(certificate_id: str, db: Session):
+    try:
+        fetch = db.query(Certificate).filter(Certificate.id == certificate_id).first()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Certificate Not Found",
+            }
+        return {"code": 200, "data": fetch}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}
+
