@@ -85,3 +85,19 @@ def update_certificate(certificate_id: str,details: CertificateUpdate, db: Sessi
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
     
+
+def delete_certificate(certificate_id: str, db: Session):
+    try:
+        fetch = db.query(Certificate).filter(Certificate.id == certificate_id).first()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Certificate Not Found",
+            }
+        db.delete(fetch)
+        db.commit()
+        return {"code": 200, "data": fetch,"message":f"{certificate_id} deleted"}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}
