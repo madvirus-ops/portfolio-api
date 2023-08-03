@@ -23,7 +23,7 @@ class BioDataOut(BioDataIn):
     id:str
     created_at:datetime
 
-    class Meta:
+    class Config():
         orm_mode = True
 
 class AllBioData(BaseModel):
@@ -33,6 +33,9 @@ class AllBioData(BaseModel):
     email:str
     nationality :str
     created_at:datetime
+
+    class Config():
+        orm_mode = True
 
 
 
@@ -51,7 +54,6 @@ class BioDataUpdate(BaseModel):
 
 
 
-# BioDataIn, BioDataOut, AllBioData, BioDataUpdate
 
 class EducationIn(BaseModel):
     biodata_id :str
@@ -65,7 +67,7 @@ class EducationOut(EducationIn):
     id:str
     created_at:datetime
 
-    class Meta:
+    class Config():
         orm_mode = True
 
 
@@ -74,6 +76,9 @@ class AllEducation(BaseModel):
     biodata_id:str
     school_name:str
     created_at:datetime
+
+    class Config():
+        orm_mode = True
 
 
 class EducationUpdate(BaseModel):
@@ -84,3 +89,34 @@ class EducationUpdate(BaseModel):
     year_entered  :Optional[date] = None 
     year_finished:Optional[date] = None 
 
+# EducationIn,EducationOut,EducationUpdate,  AllEducation
+
+class CertificateIn(BaseModel):
+    biodata_id:str
+    issuer:str
+    certificate_type:str
+    year_issued :date
+
+
+class CertificateOut(CertificateIn):
+    id:str
+    created_at:datetime
+
+    class Config():
+        orm_mode = True
+
+
+class CertificateUpdate():
+    biodata_id:Optional[str] = None 
+    issuer:Optional[str] = None 
+    certificate_type:Optional[str] = None 
+    year_issued :Optional[date] = None 
+
+
+class AllCertificate(BaseModel):
+    id:str
+    biodata_id:str
+    issuer:str
+
+    class Config():
+        orm_mode = True
