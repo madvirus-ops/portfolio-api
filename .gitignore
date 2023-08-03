@@ -2,3 +2,5 @@ env
 .env
 src/migrations/versions/*
 __pycache__
+
+src/logs/*

@@ -23,7 +23,7 @@ class Settings:
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = bool(os.getenv("DEBUG"))
     LOGGER=logger
-    POOL_SIZE = os.getenv("DB_POOL_SIZE")
+    POOL_SIZE = int(os.getenv("DB_POOL_SIZE"))
     ALLOWED_PORT = int(os.getenv("PORT"))
     DB_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
     TEST_DB_URL = os.getenv("SQLALCHEMY_TEST_DATABASE_URL")
