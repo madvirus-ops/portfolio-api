@@ -17,7 +17,7 @@ def function_name():
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def create_Certificate(details: CertificateIn, db: Session):
+def create_certificate(details: CertificateIn, db: Session):
     try:
         create = Certificate(**details.model_dump())
         db.add(create)
@@ -35,7 +35,7 @@ def create_Certificate(details: CertificateIn, db: Session):
         return {"code": 400, "status": "error", "message": e.args}
 
 
-def get_Certificate(certificate_id: str, db: Session):
+def get_certificate(certificate_id: str, db: Session):
     try:
         fetch = db.query(Certificate).filter(Certificate.id == certificate_id).first()
         if fetch is None:
@@ -49,7 +49,7 @@ def get_Certificate(certificate_id: str, db: Session):
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
-def get_all_Certificates(db:Session):
+def get_all_certificates(db:Session):
     try:
         fetch = db.query(Certificate).all()
         if fetch is None:
