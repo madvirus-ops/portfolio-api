@@ -3,6 +3,9 @@ sys.path.append("./")
 import strawberry
 from datetime import datetime,date
 
+
+
+
 @strawberry.type
 class BioData:
     first_name: str
