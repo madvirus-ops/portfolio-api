@@ -49,3 +49,18 @@ def get_Certificate(certificate_id: str, db: Session):
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
+def get_all_Certificates(db:Session):
+    try:
+        fetch = db.query(Certificate).all()
+        if fetch is None:
+            return {
+                "code": 404,
+                "status": "error",
+                "message": "Certificate Not Found",
+            }
+        return {"code": 200, "data": fetch}
+    except Exception as e:
+        print(e.args)
+        return {"code": 400, "status": "error", "message": e.args}
+    
+
