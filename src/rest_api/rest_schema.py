@@ -26,7 +26,7 @@ class BioDataOut(BioDataIn):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class AllBioData(BaseModel):
@@ -38,7 +38,7 @@ class AllBioData(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class BioDataUpdate(BaseModel):
@@ -69,7 +69,7 @@ class EducationOut(EducationIn):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class AllEducation(BaseModel):
@@ -79,7 +79,7 @@ class AllEducation(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class EducationUpdate(BaseModel):
@@ -106,20 +106,20 @@ class CertificateOut(CertificateIn):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class CertificateUpdate:
+class CertificateUpdate(BaseModel):
     biodata_id: Optional[str] = None
     issuer: Optional[str] = None
     certificate_type: Optional[str] = None
     year_issued: Optional[date] = None
 
 
-class AllCertificate(BaseModel):
+class AllCertificates(BaseModel):
     id: str
     biodata_id: str
     issuer: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
