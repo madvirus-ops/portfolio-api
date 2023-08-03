@@ -1,10 +1,10 @@
 import sys
 
 sys.path.append("./")
-from connections.models import Education,tz
+from connections.models import Education, tz
 from sqlalchemy.orm import Session
 from connections.database import get_db
-from rest_api.rest_schema import EducationIn,EducationUpdate
+from rest_api.rest_schema import EducationIn, EducationUpdate
 from datetime import datetime
 
 
@@ -24,11 +24,11 @@ def create_education(details: EducationIn, db: Session):
         db.commit()
         db.refresh(create)
         return {
-                "code": 201,
-                "status": "success",
-                "message": "Education created successfully",
-                "id": create.id,
-            }
+            "code": 201,
+            "status": "success",
+            "message": "Education created successfully",
+            "id": create.id,
+        }
 
     except Exception as e:
         print(e.args)
@@ -49,7 +49,8 @@ def get_education(education_id: str, db: Session):
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
-def get_all_educations(db:Session):
+
+def get_all_educations(db: Session):
     try:
         fetch = db.query(Education).all()
         if fetch is None:
@@ -62,9 +63,9 @@ def get_all_educations(db:Session):
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
-    
 
-def update_education(education_id: str,details: EducationUpdate, db: Session):
+
+def update_education(education_id: str, details: EducationUpdate, db: Session):
     try:
         fetch = db.query(Education).filter(Education.id == education_id).first()
         if fetch is None:
@@ -80,11 +81,11 @@ def update_education(education_id: str,details: EducationUpdate, db: Session):
             setattr(fetch, key, value)
         db.add(fetch)
         db.commit()
-        return {"code":200,"status":"success","message":f"{education_id} updated"}
+        return {"code": 200, "status": "success", "message": f"{education_id} updated"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
-    
+
 
 def delete_education(education_id: str, db: Session):
     try:
@@ -97,7 +98,7 @@ def delete_education(education_id: str, db: Session):
             }
         db.delete(fetch)
         db.commit()
-        return {"code": 200, "data": fetch,"message":f"{education_id} deleted"}
+        return {"code": 200, "data": fetch, "message": f"{education_id} deleted"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}

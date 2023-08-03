@@ -1,10 +1,10 @@
 import sys
 
 sys.path.append("./")
-from connections.models import ProfessionCertificate as Certificate,tz
+from connections.models import ProfessionCertificate as Certificate, tz
 from sqlalchemy.orm import Session
 from connections.database import get_db
-from rest_api.rest_schema import CertificateIn,CertificateUpdate
+from rest_api.rest_schema import CertificateIn, CertificateUpdate
 from datetime import datetime
 
 
@@ -24,11 +24,11 @@ def create_certificate(details: CertificateIn, db: Session):
         db.commit()
         db.refresh(create)
         return {
-                "code": 201,
-                "status": "success",
-                "message": "Certificate created successfully",
-                "id": create.id,
-            }
+            "code": 201,
+            "status": "success",
+            "message": "Certificate created successfully",
+            "id": create.id,
+        }
 
     except Exception as e:
         print(e.args)
@@ -49,7 +49,8 @@ def get_certificate(certificate_id: str, db: Session):
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
 
-def get_all_certificates(db:Session):
+
+def get_all_certificates(db: Session):
     try:
         fetch = db.query(Certificate).all()
         if fetch is None:
@@ -62,9 +63,9 @@ def get_all_certificates(db:Session):
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
-    
 
-def update_certificate(certificate_id: str,details: CertificateUpdate, db: Session):
+
+def update_certificate(certificate_id: str, details: CertificateUpdate, db: Session):
     try:
         fetch = db.query(Certificate).filter(Certificate.id == certificate_id).first()
         if fetch is None:
@@ -80,11 +81,15 @@ def update_certificate(certificate_id: str,details: CertificateUpdate, db: Sessi
             setattr(fetch, key, value)
         db.add(fetch)
         db.commit()
-        return {"code":200,"status":"success","message":f"{certificate_id} updated"}
+        return {
+            "code": 200,
+            "status": "success",
+            "message": f"{certificate_id} updated",
+        }
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}
-    
+
 
 def delete_certificate(certificate_id: str, db: Session):
     try:
@@ -97,7 +102,7 @@ def delete_certificate(certificate_id: str, db: Session):
             }
         db.delete(fetch)
         db.commit()
-        return {"code": 200, "data": fetch,"message":f"{certificate_id} deleted"}
+        return {"code": 200, "data": fetch, "message": f"{certificate_id} deleted"}
     except Exception as e:
         print(e.args)
         return {"code": 400, "status": "error", "message": e.args}

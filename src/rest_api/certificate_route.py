@@ -4,10 +4,19 @@ sys.path.append("./")
 from fastapi import APIRouter, Depends, Response, status, HTTPException
 from sqlalchemy.orm import Session
 from helpers.certificate_help import (
-    create_certificate,get_all_certificates,get_certificate,update_certificate,delete_certificate
+    create_certificate,
+    get_all_certificates,
+    get_certificate,
+    update_certificate,
+    delete_certificate,
 )
 from connections.database import get_db
-from rest_api.rest_schema import CertificateIn,CertificateOut,CertificateUpdate,AllCertificates
+from rest_api.rest_schema import (
+    CertificateIn,
+    CertificateOut,
+    CertificateUpdate,
+    AllCertificates,
+)
 
 
 router = APIRouter(prefix="/api/v1/certificate", tags=[" certificate Routes"])
@@ -45,7 +54,8 @@ async def get_certificate_route(
         return result["data"]
     else:
         raise HTTPException(
-            404, {"code": 404, "status": "error", "message": "certificate does not exist"}
+            404,
+            {"code": 404, "status": "error", "message": "certificate does not exist"},
         )
 
 
