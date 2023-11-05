@@ -5,5 +5,5 @@ set -o pipefail
 set -o nounset
 
 
-# alembic upgrade head
+alembic upgrade head
 uvicorn src.main:app --reload --reload-dir src --host 0.0.0.0
