@@ -87,7 +87,6 @@ def update_biodata(biodata_id: str,details: BioDataUpdate, db: Session):
                 "message": "Biodata Not Found",
             }
         fetch.updated_at = datetime.now(tz)
-        db.commit()
         hero_data = details.model_dump(exclude_unset=True)
         for key, value in hero_data.items():
             setattr(fetch, key, value)
